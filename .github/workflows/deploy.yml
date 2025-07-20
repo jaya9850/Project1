@@ -17,19 +17,19 @@ jobs:
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
-        username: ec2-user
+        username: ubuntu
         key: ${{ secrets.EC2_KEY }}
         source: "."
-        target: "/home/ec2-user/flask-app"
+        target: "/home/ubuntu/flask-auto-deploy"
 
     - name: Restart Flask App
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
-        username: ec2-user
+        username: ubuntu
         key: ${{ secrets.EC2_KEY }}
         script: |
-          cd /home/ec2-user/flask-app
+          cd /home/ubuntu/flask-auto-deploy
           pip3 install -r requirements.txt
           pkill gunicorn || true
           nohup gunicorn app:app --bind 0.0.0.0:5000 &
