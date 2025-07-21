@@ -32,4 +32,4 @@ jobs:
           cd /home/ubuntu/flask-auto-deploy
           pip3 install -r requirements.txt
           pkill -f gunicorn || true
-          gunicorn app:app --bind 0.0.0.0:5000 --daemon
+          nohup gunicorn app:app --bind 0.0.0.0:5000 > gunicorn.log 2>&1 &
