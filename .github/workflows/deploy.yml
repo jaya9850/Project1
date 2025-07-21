@@ -29,6 +29,6 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         script: |
           cd /home/ubuntu/flask-auto-deploy
-          pip3 install --user --force-reinstall -r requirements.txt
-          pkill -f gunicorn || true
-          nohup gunicorn app:app --bind 0.0.0.0:5000 --daemon
+          pip3 install -r requirements.txt
+          pkill gunicorn || true
+          nohup gunicorn app:app --bind 0.0.0.0:5000 &
