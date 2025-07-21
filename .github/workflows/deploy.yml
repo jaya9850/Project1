@@ -2,8 +2,7 @@ name: Deploy Flask App to EC2
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   deploy:
@@ -22,14 +21,14 @@ jobs:
         source: "."
         target: "/home/ubuntu/flask-auto-deploy"
 
-    - name: Restart Flask App on EC2
+    - name: Restart Flask App
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.EC2_KEY }}
         script: |
-          cd ~/flask-auto-deploy
+          cd /home/ubuntu/flask-auto-deploy
           pip3 install --user --force-reinstall -r requirements.txt
           pkill -f gunicorn || true
           nohup gunicorn app:app --bind 0.0.0.0:5000 --daemon
